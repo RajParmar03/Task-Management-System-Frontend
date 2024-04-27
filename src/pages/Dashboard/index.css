@@ -1,12 +1,14 @@
-/* Dashboard.css */
-
 .dashboard-container {
     width: 80%;
     margin: 50px auto;
   }
   
   .dashboard-controls {
+    margin: auto;
     margin-bottom: 20px;
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
   }
   
   .dashboard-controls button,
@@ -27,7 +29,7 @@
   
   .task-table th {
     background-color: #f2f2f2;
-    font-weight: bold;
+    font-weight: normal;
     text-align: left;
   }
   
@@ -42,4 +44,8 @@
   .delete-button, .logout-button{
     background-color: red;
   }
-  
+
+  .logout-button{
+    display: flex;
+    justify-self: right;
+  }

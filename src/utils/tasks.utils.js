@@ -119,7 +119,7 @@ export const getPriorityColor = (priority) => {
       case 'high':
         return 'red';
       case 'medium':
-        return 'yellow';
+        return 'orange';
       case 'low':
         return 'green';
       default:
@@ -132,7 +132,7 @@ export const getPriorityColor = (priority) => {
         case 'pending':
           return 'red';
         case 'in-progress':
-          return 'yellow';
+          return 'orange';
         case 'completed':
           return 'green';
         default:

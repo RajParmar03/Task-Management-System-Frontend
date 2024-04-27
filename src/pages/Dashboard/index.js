@@ -6,7 +6,7 @@ import Add from '../../components/Add';
 import Edit from '../../components/Edit';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../../redux/tasks/tasks.action';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -30,7 +30,7 @@ const Dashboard = () => {
     })();
   }, []);
 
-  const sortByPriority = async(typeOfSort) => {
+  const sortByPriority = async (typeOfSort) => {
     let newtaskList = await sortArr(typeOfSort, taskList);
     dispatch(addTask(newtaskList));
   };
@@ -62,13 +62,23 @@ const Dashboard = () => {
   }
 
   const renderTableRows = () => {
+    if (taskList.length === 0) {
+      return <>
+        <tr>
+          <td colSpan={7} rowSpan={4}>
+            <p>No tasks added yet.</p>
+            <p>You can add a task by clicking : <button onClick={() => handleAdd()} className="add-task-button">Add Task</button></p>
+          </td>
+        </tr>
+      </>
+    }
     return taskList.map((task, index) => (
       <tr key={task._id}>
         <td>{index + 1}</td>
         <td>{task.title}</td>
         <td>{task.description}</td>
-        <td style={{ color: getColorByStatus(task.status) , fontWeight:"bold"}}>{task.status}</td>
-        <td style={{ color: getPriorityColor(task.priority), fontWeight:"bold" }}>{task.priority}</td>
+        <td style={{ color: getColorByStatus(task.status), textTransform: "uppercase" }}>{task.status}</td>
+        <td style={{ color: getPriorityColor(task.priority), textTransform: "uppercase" }}>{task.priority}</td>
         <td><button onClick={() => handleEdit(task)}>Edit</button></td>
         <td><button className='delete-button' onClick={() => handleDelete(task._id)}>Delete</button></td>
       </tr>
@@ -80,7 +90,10 @@ const Dashboard = () => {
 
       {!isAdding && !isEditing && (
         <div className="dashboard-container">
-          <h2>Dashboard</h2>
+          <h2>DASHBOARD</h2>
+          <div style={{display:'flex', justifyContent:'right'}}>
+            <button className='logout-button' onClick={() => handleLogout()}>Logout</button>
+          </div>
           <div className="dashboard-controls">
             <select onChange={(e) => sortByPriority(e.target.value)}>
               <option value="">Sort by priority</option>
@@ -94,7 +107,6 @@ const Dashboard = () => {
               <option value="completed">Completed</option>
             </select>
             <button onClick={() => handleAdd()}>Add Task</button>
-            <button className='logout-button' onClick={() => handleLogout()}>Logout</button>
           </div>
           <table className="task-table">
             <thead>
